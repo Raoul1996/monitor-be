@@ -1,0 +1,11 @@
+###
+POST http://127.0.0.1:3000/servo
+Content-Type: application/json
+
+{
+  "value": "content"
+}
+
+###
+GET http://127.0.0.1:3000/servo
+Content-Type: application/json
