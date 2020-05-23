@@ -2,24 +2,22 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ServoModule } from './servo/servo.module';
-import { LoggerMiddleware } from './logger.middleware';
+import { LoggerMiddleware } from './logger/logger.middleware';
 import { ServoController } from './servo/servo.controller';
 import { CorsMiddleware } from '@nest-middlewares/cors';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './roles.guard';
-import { LoggingInterceptor } from './logging.interceptor';
 import { PagesModule } from './pages/pages.module';
+import { LoggerModule } from './logger/logger.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ServoModule, PagesModule],
+  imports: [ServoModule, PagesModule, ConfigModule.forRoot(),LoggerModule],
   controllers: [AppController],
   providers: [AppService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
-    }, {
-      provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
     }],
 })
 export class AppModule implements NestModule {

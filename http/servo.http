@@ -9,3 +9,8 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:3000/servo
 Content-Type: application/json
+
+###
+GET http://127.0.0.1:3000/
+Content-Type: application/json
+x-requestId 1sfadsfasf

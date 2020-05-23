@@ -11,7 +11,7 @@ import {
   Post,
   Put,
   Query,
-  Redirect, SetMetadata,
+  Redirect,
   UseGuards,
 } from '@nestjs/common';
 import { ServoService } from './servo.service';
