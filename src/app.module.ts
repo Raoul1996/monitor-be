@@ -8,9 +8,10 @@ import { CorsMiddleware } from '@nest-middlewares/cors';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { RolesGuard } from './roles.guard';
 import { LoggingInterceptor } from './logging.interceptor';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
-  imports: [ServoModule],
+  imports: [ServoModule, PagesModule],
   controllers: [AppController],
   providers: [AppService,
     {
