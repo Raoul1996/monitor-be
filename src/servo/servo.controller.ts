@@ -16,10 +16,11 @@ import {
 } from '@nestjs/common';
 import { ServoService } from './servo.service';
 import { Observable, of } from 'rxjs';
-import { CreateServoDto, SetRotateDto, SetTurnStepDto, UpdateServoDto } from './dto/set-rotate.dto';
+import { SetRotateDto, SetTurnStepDto, UpdateServoDto } from './dto/set-rotate.dto';
 import { Servo } from './interfaces/servo.interface';
-import { RolesGuard } from '../roles.guard';
-import { Roles, RolesEnum } from '../roles.decorator';
+import { RolesGuard } from '../guard/roles.guard';
+import { Roles, RolesEnum } from '../decorator/roles.decorator';
+import { ServoEntity } from './servo.entity';
 
 @Controller('servo')
 @UseGuards(RolesGuard)
@@ -27,16 +28,16 @@ export class ServoController {
   constructor(private readonly servoService: ServoService) {
   }
   @Post()
-  @Roles(RolesEnum.ADMIN)
-  createServo(@Body() createServo: CreateServoDto): Observable<Servo> {
-    const servo = this.servoService.create(createServo)
-    return of(servo)
+  // @Roles(RolesEnum.ADMIN)
+  createServo(@Body() servo: Servo): Observable<ServoEntity> {
+    const servoEntity = this.servoService.create(servo)
+    return servoEntity
   }
 
   @Get()
-  getServos():Observable<Servo[]> {
-    const servos = this.servoService.findAll()
-    return of(servos)
+  getServos(@Query('take') take:number,@Query('skip') skip:number) {
+    const data = this.servoService.findAll({take,skip})
+    return data
   }
   @Get(":id")
   getServoById(@Param('id') id: string):Observable<Servo[]> {

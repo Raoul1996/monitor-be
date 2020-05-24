@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerOptions } from './logger.interface';
 import configuration, { LoggerConfig } from '../config/configuration';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggingInterceptor } from './logging.interceptor';
+import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 
 @Module({
   imports:[ConfigModule.forRoot({

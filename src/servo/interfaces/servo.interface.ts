@@ -1,6 +1,7 @@
 export interface Servo {
-  id?:number;
+  name:string;
   type:number;
+  description:string;
   owner:string;
   isPublic:boolean;
   createTime?:number;
