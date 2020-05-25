@@ -27,4 +27,10 @@ export class ServoEntity {
   @Column('bigint')
   createTime: number;
 
+  @Column('bigint')
+  updateTime:number;
+
+  @Column("int")
+  updater:number
+
 }

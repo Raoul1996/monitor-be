@@ -1,0 +1,8 @@
+{
+  "type": "sqlite",
+  "database": "./monitor.db",
+  "migrations": ["migration/*.ts"],
+  "cli": {
+    "migrationsDir": "migration"
+  }
+}

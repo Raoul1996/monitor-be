@@ -131,8 +131,8 @@ export class LoggerService {
         } catch (e) {
         }
       }
-      let reqId: string = ""
-      let context: string = ""
+      let reqId = ""
+      let context = ""
       if (info["0"]) {
         const meta = info["0"]
         if (meta.reqId) {

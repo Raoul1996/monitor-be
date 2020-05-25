@@ -17,10 +17,8 @@ import {
 import { ServoService } from './servo.service';
 import { Observable, of } from 'rxjs';
 import { CreateServoDto, ServoDto, SetTurnStepDto, UpdateServoDto } from './dto/servo.dto';
-import { Servo } from './interfaces/servo.interface';
+import { Servo } from './interface/servo.interface';
 import { RolesGuard } from '../guard/roles.guard';
-import { Roles, RolesEnum } from '../decorator/roles.decorator';
-import { ServoEntity } from './servo.entity';
 import { FindOneParams } from '../common/dto/common.dto';
 
 @Controller('servo')
@@ -30,9 +28,9 @@ export class ServoController {
   }
   @Post()
   // @Roles(RolesEnum.ADMIN)
-  createServo(@Body() createServoDto: CreateServoDto): Observable<ServoEntity> {
-    const servoEntity = this.servoService.create(createServoDto)
-    return servoEntity
+  createServo(@Body() createServoDto: CreateServoDto): Observable<Servo> {
+    const servo = this.servoService.create(createServoDto)
+    return servo
   }
 
   @Get()

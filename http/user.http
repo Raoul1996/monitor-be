@@ -1,0 +1,12 @@
+### create user
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "name": "12s1321zq1",
+  "mobile": "+8615123221199",
+  "password": "hhhasf1sssd2asdfa",
+  "email": "icy@icy111sa.com"
+}
+
+###

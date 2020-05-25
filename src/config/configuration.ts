@@ -9,10 +9,15 @@ export interface LoggerConfig {
   colorize?: boolean
 }
 
+export interface oAuthConfig {
+  clientId: string,
+  clientSecret:string
+}
 export interface Configuration {
   serviceName: string,
   logger: LoggerConfig
-  db: SqliteConnectionOptions
+  db: SqliteConnectionOptions,
+  oAuth: oAuthConfig
 }
 
 export default (): Configuration => (
@@ -28,4 +33,8 @@ export default (): Configuration => (
       type: 'sqlite',
       database:join(__dirname,"../../",'monitor.db')
     },
+    oAuth:{
+      clientId: "0a0435e936279e806911",
+      clientSecret:"152d69f6127fa838346d2f4e0ce074d37b2a8ac4"
+    }
   })

@@ -1,12 +1,11 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Servo } from './interfaces/servo.interface';
+import { Inject, Injectable } from '@nestjs/common';
 import { QueryFailedError, Repository } from 'typeorm';
 import { ServoEntity } from './servo.entity';
 import { Observable, throwError } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { catchError, filter, map } from 'rxjs/operators';
-import { error } from 'winston';
+import { catchError, map } from 'rxjs/operators';
 import { CreateServoDto } from './dto/servo.dto';
+import { Servo } from './interface/servo.interface';
 
 @Injectable()
 export class ServoService {
@@ -15,16 +14,7 @@ export class ServoService {
   ) {
   }
 
-  create(servo: CreateServoDto): Observable<ServoEntity> {
-    fromPromise(this.servoRepository.findOne({
-      where:{name:servo.name}
-    })).pipe(
-      map(v=>{
-        if (v){
-          throw new HttpException({code:HttpStatus.UNPROCESSABLE_ENTITY,error:'exists.'},HttpStatus.UNPROCESSABLE_ENTITY)
-        }
-      })
-    )
+  create(servo: CreateServoDto): Observable<Servo> {
     const servoEntity = new ServoEntity();
     servoEntity.createTime = new Date().valueOf();
     servoEntity.name = servo.name;
@@ -32,12 +22,21 @@ export class ServoService {
     servoEntity.description = servo.description;
     servoEntity.ownerId=1
     return fromPromise(this.servoRepository.save(servoEntity)).pipe(
+      map((servo)=>({
+        id: servo.id,
+        name: servo.name,
+        description: servo.description,
+        type: servo.type,
+        ownerId: servo.ownerId,
+        createTime: servo.createTime,
+        updateTime:servo.updateTime,
+      })),
       catchError(err =>{
         return throwError(err)}),
     );
   }
 
-  findAll({ take, skip }): Observable<{ servos: ServoEntity[], count: number }> {
+  findAll({ take, skip }): Observable<{ servos: Servo[], count: number }> {
     return fromPromise(this.servoRepository.findAndCount({
       where: { isDel: 0, isLocked: 0, isPublic: 1 },
       order: { createTime: 'DESC' },
@@ -52,6 +51,7 @@ export class ServoService {
           type: v.type,
           ownerId: v.ownerId,
           createTime: v.createTime,
+          updateTime:v.updateTime,
         })), count,
       })),
       catchError((err: QueryFailedError) => {

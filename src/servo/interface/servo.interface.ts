@@ -2,9 +2,8 @@ export interface Servo {
   name:string;
   type:number;
   description:string;
-  owner:string;
-  isPublic:boolean;
-  createTime?:number;
+  ownerId:number;
+  createTime:number;
+  updateTime:number;
   isLocked?:boolean;
-  isDel?:boolean;
 }

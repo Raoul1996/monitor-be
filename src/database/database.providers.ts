@@ -13,6 +13,8 @@ export const databaseProviders: Provider[] = [
       ],
       key:'side.project.monitor',
       synchronize: true,
+      logging:"all",
+      logger:"advanced-console",
     }),
   },
 ];
