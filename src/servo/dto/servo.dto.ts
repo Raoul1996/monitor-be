@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumberString } from 'class-validator';
 
-export class SetRotateDto {
+export class ServoDto {
   x: number;
   y: number;
   target: number;
@@ -12,6 +12,8 @@ export class SetTurnStepDto {
 }
 
 export class CreateServoDto {
+  @IsNotEmpty()
+  name:string
   @IsNumberString()
   type:number
   description:string;

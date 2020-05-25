@@ -18,11 +18,11 @@ export class ServoEntity {
   ownerId: number;
 
   @Column({default:0,type:"tinyint",enum:[1,0]})
-  isDel: number;
+  isDel?: number;
   @Column({default:0,type:"tinyint",enum:[1,0]})
-  isLocked: number;
+  isLocked?: number;
   @Column({default:1,type:"tinyint",enum:[1,0]})
-  isPublic: number;
+  isPublic?: number;
 
   @Column('bigint')
   createTime: number;

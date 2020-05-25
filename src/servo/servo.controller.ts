@@ -16,11 +16,12 @@ import {
 } from '@nestjs/common';
 import { ServoService } from './servo.service';
 import { Observable, of } from 'rxjs';
-import { SetRotateDto, SetTurnStepDto, UpdateServoDto } from './dto/set-rotate.dto';
+import { CreateServoDto, ServoDto, SetTurnStepDto, UpdateServoDto } from './dto/servo.dto';
 import { Servo } from './interfaces/servo.interface';
 import { RolesGuard } from '../guard/roles.guard';
 import { Roles, RolesEnum } from '../decorator/roles.decorator';
 import { ServoEntity } from './servo.entity';
+import { FindOneParams } from '../common/dto/common.dto';
 
 @Controller('servo')
 @UseGuards(RolesGuard)
@@ -29,8 +30,8 @@ export class ServoController {
   }
   @Post()
   // @Roles(RolesEnum.ADMIN)
-  createServo(@Body() servo: Servo): Observable<ServoEntity> {
-    const servoEntity = this.servoService.create(servo)
+  createServo(@Body() createServoDto: CreateServoDto): Observable<ServoEntity> {
+    const servoEntity = this.servoService.create(createServoDto)
     return servoEntity
   }
 
@@ -40,23 +41,23 @@ export class ServoController {
     return data
   }
   @Get(":id")
-  getServoById(@Param('id') id: string):Observable<Servo[]> {
+  getServoById(@Param('id') id: FindOneParams):Observable<Servo[]> {
     return of([])
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateServoDto: UpdateServoDto) {
+  update(@Param('id') id: FindOneParams, @Body() updateServoDto: UpdateServoDto) {
     return [];
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: FindOneParams) {
     return [];
   }
   @Post("rotate")
   @HttpCode(204)
   @Header('X-Svc', 'rasp')
-  setRotate(@Body() setRotateDto: SetRotateDto): Observable<any> {
+  setRotate(@Body() setRotateDto: ServoDto): Observable<any> {
     return of(setRotateDto)
   }
 
