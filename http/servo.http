@@ -11,9 +11,8 @@ GET http://127.0.0.1:3000/servo
 Content-Type: application/json
 
 ###
-GET http://127.0.0.1:3000/
+GET http://127.0.0.1:3000/?query=1
 Content-Type: application/json
-x-requestId 1sfadsfasf
 
 ###
 POST http://127.0.0.1:3000/servo

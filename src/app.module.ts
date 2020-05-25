@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ServoModule } from './servo/servo.module';
@@ -7,6 +7,9 @@ import { RolesGuard } from './guard/roles.guard';
 import { PagesModule } from './pages/pages.module';
 import { LoggerModule } from './logger/logger.module';
 import { TimeoutInterceptor } from './interceptor/timeout.interceptor';
+import { LoggerMiddleware } from './middleware/logger.middleware';
+import { ServoController } from './servo/servo.controller';
+import { PagesController } from './pages/pages.controller';
 
 @Module({
   imports: [
@@ -24,5 +27,5 @@ import { TimeoutInterceptor } from './interceptor/timeout.interceptor';
       useClass: TimeoutInterceptor,
     }],
 })
-export class AppModule {}
+export class AppModule{}
 

@@ -4,11 +4,10 @@ import { LoggerService } from './logger/logger.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService,private readonly logger:LoggerService) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
-    this.logger.info(`get Hello`)
     return this.appService.getHello();
   }
 }
