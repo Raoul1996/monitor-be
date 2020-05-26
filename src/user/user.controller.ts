@@ -11,11 +11,12 @@ export class UserController {
   }
 
   @Post()
-  createServo(@Body() createUserDto: CreateUserDto):Observable<User> {
-   return this.userService.checkUserExist(createUserDto).pipe(
+  createUser(@Body() createUserDto: CreateUserDto):Observable<User> {
+   return this.userService.checkUserExist(createUserDto.mobile,createUserDto.email).pipe(
+      //TODO: why use `mergeMap` not the `switchMap` or other High Order operator？
       mergeMap(userId => {
           if (!userId) {
-            return this.userService.create(createUserDto);
+            return this.userService.createUser(createUserDto);
           } else {
             throw new HttpException('user_exist', HttpStatus.CONFLICT);
           }

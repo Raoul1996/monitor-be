@@ -12,6 +12,7 @@ export class CreateUserDto {
   password:string
 
   @IsEmail()
+  @IsOptional()
   email?:string
 
   @IsUrl({protocols:["http","https"]})
@@ -25,5 +26,26 @@ export class CreateUserDto {
   @IsIn([0,1])
   @IsOptional()
   gender?:number
+}
+export class UpdateUserDto{
+  @IsNotEmpty()
+  name:string
 
+  @IsMobilePhone('zh-CN',{strictMode:true},{message:"only china mobile allowed"})
+  mobile:number
+
+  @Length(6,20)
+  password:string
+
+  @IsEmail()
+  email:string
+
+  @IsUrl({protocols:["http","https"]})
+  avatarUri:string
+
+  @IsLocale()
+  zone:string
+
+  @IsIn([0,1])
+  gender:number
 }

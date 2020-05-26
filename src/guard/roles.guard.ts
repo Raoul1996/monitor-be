@@ -1,6 +1,9 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
+const matchRoles = (roles:string[],userRoles:string[])=>{
+  return true
+}
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector:Reflector) {}
@@ -17,6 +20,4 @@ export class RolesGuard implements CanActivate {
   }
 }
 
-const matchRoles = (roles:string[],user_roles:string[])=>{
-  return true
-}
+

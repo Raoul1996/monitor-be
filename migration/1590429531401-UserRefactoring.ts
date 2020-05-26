@@ -89,7 +89,6 @@ export class UserRefactoring1590429531401 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const table  = await queryRunner.getTable("user")
     await queryRunner.dropIndex("user","IDX_USER_EMAIL")
     await queryRunner.dropIndex("user","IDX_USER_MOBILE")
     await queryRunner.dropIndex("user","IDX_USER_NAME")

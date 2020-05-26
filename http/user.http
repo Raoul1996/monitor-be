@@ -3,10 +3,20 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-  "name": "12s1321zq1",
-  "mobile": "+8615123221199",
+  "name": "1",
+  "mobile": "+8615223221199",
   "password": "hhhasf1sssd2asdfa",
-  "email": "icy@icy111sa.com"
+  "email": "icy@icy11w1sa.com"
 }
 
 ###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "mobile": "+8615123221199",
+  "password": "hhhasf1sssd2asdfa"
+}
+
+### ### create user
+GET http://localhost:3000/user

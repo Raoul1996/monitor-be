@@ -1,22 +1,19 @@
 import { HttpModule, Module } from '@nestjs/common';
 import { LoggerService } from './logger.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerOptions } from './logger.interface';
-import configuration, { LoggerConfig } from '../config/configuration';
+import configuration from '../config/configuration';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 
 @Module({
-  imports:[ConfigModule.forRoot({
-    load:[configuration]
-  }),HttpModule],
+  imports:[HttpModule],
   providers:[{
     provide:LoggerService,
-    useFactory:(config:ConfigService)=>{
-      const loggerConfig = config.get<LoggerConfig>("logger")
+    useFactory:()=>{
+      const loggerConfig = configuration.logger
       const options:LoggerOptions = {
         fileOptions:{
-          filename:`${loggerConfig.logFilePath}/${config.get("serviceName")}-%DATE%.log`
+          filename:`${loggerConfig.logFilePath}/${configuration.serviceName}-%DATE%.log`
         },
         colorize:loggerConfig.colorize
       }
@@ -29,7 +26,6 @@ import { LoggingInterceptor } from '../interceptor/logging.interceptor';
         loggers
       )
     },
-    inject:[ConfigService]
   },{
     provide:APP_INTERCEPTOR,
     useClass:LoggingInterceptor

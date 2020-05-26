@@ -9,19 +9,19 @@ export interface LoggerConfig {
   colorize?: boolean
 }
 
-export interface oAuthConfig {
+export interface OAuthConfig {
   clientId: string,
-  clientSecret:string
+  clientSecret:string,
+  expiresIn:string
 }
 export interface Configuration {
   serviceName: string,
   logger: LoggerConfig
   db: SqliteConnectionOptions,
-  oAuth: oAuthConfig
+  oAuth: OAuthConfig
 }
 
-export default (): Configuration => (
-  {
+export default {
     serviceName: 'project.side.monitor_be',
     logger: {
       logLevel: 'debug',
@@ -35,6 +35,7 @@ export default (): Configuration => (
     },
     oAuth:{
       clientId: "0a0435e936279e806911",
-      clientSecret:"152d69f6127fa838346d2f4e0ce074d37b2a8ac4"
+      clientSecret:"152d69f6127fa838346d2f4e0ce074d37b2a8ac4",
+      expiresIn:'8h'
     }
-  })
+}

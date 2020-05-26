@@ -13,8 +13,8 @@ export const databaseProviders: Provider[] = [
       ],
       key:'side.project.monitor',
       synchronize: true,
-      logging:"all",
-      logger:"advanced-console",
+      logging:process.env.NODE_ENV === 'dev'? 'all':false,
+      logger: process.env.NODE_ENV === 'dev' ? "advanced-console":undefined,
     }),
   },
 ];

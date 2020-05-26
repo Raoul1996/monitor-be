@@ -23,9 +23,6 @@ export class UserEntity {
   @Column({type:"varchar",length:255,nullable:false})
   password:string
 
-  @Column({type:"varchar",length:255,nullable:false})
-  salt:string
-
   @Column({type:"tinyint",enum:[0,1],default:1})
   gender:number;
 

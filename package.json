@@ -33,6 +33,7 @@
     "@nestjsx/crud": "^4.6.2",
     "@nestjsx/crud-typeorm": "^4.6.2",
     "@types/express-request-id": "^1.4.1",
+    "@types/passport-jwt": "^3.0.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "cli-color": "^2.0.0",
