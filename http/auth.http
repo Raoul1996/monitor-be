@@ -1,0 +1,4 @@
+GET http://localhost:3000/auth/protected
+Accept: application/json
+Authorization: Bearer your_token
+###

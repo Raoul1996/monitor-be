@@ -10,15 +10,22 @@ export interface LoggerConfig {
 }
 
 export interface OAuthConfig {
-  clientId: string,
-  clientSecret:string,
-  expiresIn:string
+  github:{
+    clientId: string,
+    clientSecret:string,
+    callbackURL:string
+  }
+}
+export interface JwtConfig {
+  secret:string,
+  expiredIn:number
 }
 export interface Configuration {
   serviceName: string,
   logger: LoggerConfig
   db: SqliteConnectionOptions,
   oAuth: OAuthConfig
+  jwt:JwtConfig
 }
 
 export default {
@@ -34,8 +41,15 @@ export default {
       database:join(__dirname,"../../",'monitor.db')
     },
     oAuth:{
-      clientId: "0a0435e936279e806911",
-      clientSecret:"152d69f6127fa838346d2f4e0ce074d37b2a8ac4",
-      expiresIn:'8h'
+      github:{
+        clientId: "0a0435e936279e806911",
+        clientSecret:"152d69f6127fa838346d2f4e0ce074d37b2a8ac4",
+        callbackURL:"http://localhost:3000/auth/callback/github/"
+      }
+    },
+    jwt:{
+      secret:"monitor_be",
+      // unit:ms
+      expiresIn:8*3600*1000,
     }
 }

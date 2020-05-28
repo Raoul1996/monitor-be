@@ -6,6 +6,12 @@ import { catchError, map } from 'rxjs/operators';
 import { CryptoService } from './crypto/crypto.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoggerService } from '../logger/logger.service';
+import configuration from '../config/configuration';
+export enum Provider {
+  GITHUB="github",
+  GOOGLE="google",
+  LOGIN="LOGIN"
+}
 
 @Injectable()
 export class AuthService {
@@ -25,10 +31,10 @@ export class AuthService {
       catchError(err => throwError(err))
     )
   }
-  certificate(user:User){
-    const payload = {sub:user.id,name:user.name,role:user.role}
+  certificate(userId:number|string,provider: Provider){
+    const payload = {sub:userId,provider}
     try {
-      const token = this.jwtService.sign(payload)
+      const token = this.jwtService.sign(payload,{expiresIn:configuration.jwt.expiresIn})
       return token
     }catch (e) {
       this.loggerService.error(`sign error: user payload: ${JSON.stringify(payload)}`)

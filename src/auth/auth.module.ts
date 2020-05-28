@@ -8,17 +8,18 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { LoggerModule } from '../logger/logger.module';
+import { GithubStrategy } from './github.strategy';
 
 @Module({
   imports: [
     PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.register({
-      secret: configuration.oAuth.clientSecret,
+      secret: configuration.jwt.secret,
     }),
     UserModule,
     LoggerModule
   ],
-  providers: [AuthService, CryptoService, JwtStrategy],
+  providers: [AuthService, CryptoService, JwtStrategy,GithubStrategy],
   exports:[AuthService],
   controllers: [AuthController]
 })
