@@ -5,10 +5,10 @@ import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import configuration from '../config/configuration';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { LoggerModule } from '../logger/logger.module';
-import { GithubStrategy } from './github.strategy';
+import { GithubStrategy } from './strategies/github.strategy';
 
 @Module({
   imports: [

@@ -8,7 +8,7 @@ export class UserEntity {
   @Column({type:"varchar",length:255,unique:true,nullable:false})
   email:string
 
-  @Column({type:"bigint",unique:true,nullable:false})
+  @Column({type:"bigint",unique:true,nullable:true})
   mobile:number
 
   @Column({type:"varchar",length:255,nullable:false})
@@ -20,7 +20,7 @@ export class UserEntity {
   @Column({type:"varchar",length:255,nullable:false,default:"cn"})
   zone:string
 
-  @Column({type:"varchar",length:255,nullable:false})
+  @Column({type:"varchar",length:255,nullable:true})
   password:string
 
   @Column({type:"tinyint",enum:[0,1],default:1})
@@ -40,4 +40,11 @@ export class UserEntity {
 
   @Column({type:'bigint'})
   updateTime:number;
+
+  @Column({type:"tinyint",nullable:true})
+  provider:number;
+
+  @Column({type:'bigint',nullable:true})
+  loginId:number;
+
 }

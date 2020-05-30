@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import configuration from '../config/configuration';
+import configuration from '../../config/configuration';
+import { JwtContent } from '../auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
@@ -12,9 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
       secretOrKey: configuration.jwt.secret
     });
   }
-  public validate(...args){
-    console.log(args);
-    // TODO: verify
-    return true
+  public validate(payload:JwtContent){
+    return {userId:+payload.sub,username:payload.username,provider:payload.provider}
   }
 }

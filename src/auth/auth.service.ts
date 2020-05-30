@@ -2,15 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { Observable, throwError } from 'rxjs';
 import { User } from '../user/interfaces/user.inteface';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { CryptoService } from './crypto/crypto.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoggerService } from '../logger/logger.service';
 import configuration from '../config/configuration';
+
 export enum Provider {
   GITHUB="github",
   GOOGLE="google",
   LOGIN="LOGIN"
+}
+export const ProviderId = {
+  GITHUB:1,
+  GOOGLE:2
+}
+export interface JwtContent {
+  sub:string;
+  username:string;
+  provider:Provider
 }
 
 @Injectable()
@@ -22,7 +32,8 @@ export class AuthService {
   ) {
   }
   validateUser(mobile:number,password:string):Observable<User>{
-    return this.userService.queryOneUser({mobile}).pipe(
+    return this.userService.queryOneUser({where:{mobile}}).pipe(
+      tap(user=>console.log(user)),
       map(user=>{
         if (user && this.cryptoService.validatePassword(user.password,password)){
           return user
@@ -31,8 +42,8 @@ export class AuthService {
       catchError(err => throwError(err))
     )
   }
-  certificate(userId:number|string,provider: Provider){
-    const payload = {sub:userId,provider}
+  certificate(userId:string,username:string,provider: Provider){
+    const payload = {sub:userId,username:username,provider}
     try {
       const token = this.jwtService.sign(payload,{expiresIn:configuration.jwt.expiresIn})
       return token

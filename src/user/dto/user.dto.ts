@@ -5,14 +5,13 @@ export class CreateUserDto {
   @IsNotEmpty()
   name:string
 
-  @IsMobilePhone('zh-CN',{strictMode:true},{message:"only china mobile allowed"})
+  @IsMobilePhone('zh-CN',{strictMode:false},{message:"only china mobile allowed"})
   mobile:number
 
   @Length(6,20)
   password:string
 
   @IsEmail()
-  @IsOptional()
   email?:string
 
   @IsUrl({protocols:["http","https"]})
@@ -31,7 +30,7 @@ export class UpdateUserDto{
   @IsNotEmpty()
   name:string
 
-  @IsMobilePhone('zh-CN',{strictMode:true},{message:"only china mobile allowed"})
+  @IsMobilePhone('zh-CN',{strictMode:false},{message:"only china mobile allowed"})
   mobile:number
 
   @Length(6,20)

@@ -1,13 +1,15 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CryptoService } from '../auth/crypto/crypto.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { UserEntity } from './user.entity';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { User } from './interfaces/user.inteface';
-import { Repository } from 'typeorm';
+import { Repository,FindOneOptions } from 'typeorm';
 import { LoggerService } from '../logger/logger.service';
+import { GithubProfile } from '../auth/strategies/github.strategy';
+import { Provider, ProviderId } from '../auth/auth.service';
 
 @Injectable()
 export class UserService {
@@ -17,8 +19,8 @@ export class UserService {
     private readonly loggerService: LoggerService) {
   }
 
-  private transEntity(user: UserEntity): User {
-    if (!user) return
+  public transEntity(user: UserEntity): User {
+    if (!user) return;
     return {
       id: user.id,
       email: user.email,
@@ -41,6 +43,7 @@ export class UserService {
     userEntity.email = payload.email;
     userEntity.avatarUri = payload.avatarUri;
     userEntity.zone = payload.zone;
+    userEntity.provider = ProviderId[Provider.LOGIN]
     userEntity.updateTime = new Date().valueOf();
     if (!isUpdate) {
       userEntity.createTime = new Date().valueOf();
@@ -58,13 +61,45 @@ export class UserService {
     );
   }
 
+  public findOrMergeGithubUser(payload: GithubProfile): Observable<User> {
+    const loginId = payload._json.id;
+    return fromPromise(this.userRepository.findOne({
+      where: { loginId },
+    })).pipe(
+      mergeMap((user) => {
+        if (!user) {
+          return this.createUserViaGithub(payload)
+        }
+        return of(this.transEntity(user));
+      }),
+      catchError(err => throwError(err))
+    );
+
+  }
+
+  public createUserViaGithub(payload: GithubProfile): Observable<User> {
+    const userEntity = new UserEntity()
+    userEntity.name =  payload._json.login
+    userEntity.email = payload.emails[0].value
+    userEntity.provider = ProviderId[Provider[payload.provider]]
+    userEntity.avatarUri = payload._json.avatar_url
+    userEntity.loginId = payload._json.id
+    userEntity.createTime = new Date().valueOf()
+    userEntity.updateTime = new Date().valueOf()
+    return fromPromise(this.userRepository.save(userEntity)).pipe(
+      map(this.transEntity),
+      catchError(err=>throwError(err))
+    )
+  }
+
   public checkUserExist(mobile: number, email: string): Observable<boolean> {
-    return this.queryUserByEmailOrMobile({mobile, email}).pipe(
+    return this.queryUserByEmailOrMobile({ mobile, email }).pipe(
       map((v) => !!v?.id),
       catchError(err => throwError(err)),
     );
   }
-  public queryUserByEmailOrMobile({mobile,email}:{mobile?: number, email?: string}): Observable<User> {
+
+  public queryUserByEmailOrMobile({ mobile, email }: { mobile?: number, email?: string }): Observable<User> {
     const findOptions = [];
     if (!mobile && !email) {
       return throwError(new BadRequestException('no email and mobile provide'));
@@ -83,10 +118,8 @@ export class UserService {
     );
   }
 
-  public queryOneUser({ mobile }): Observable<UserEntity> {
-    return fromPromise(this.userRepository.findOne({
-      where:{mobile}
-    })).pipe(
+  public queryOneUser(options:FindOneOptions<UserEntity>): Observable<UserEntity> {
+    return fromPromise(this.userRepository.findOne(options)).pipe(
       catchError(err => throwError(err)),
     );
 

@@ -1,4 +1,9 @@
-GET http://localhost:3000/auth/protected
+GET http://localhost:3000/auth/profile
 Accept: application/json
-Authorization: Bearer your_token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcm5hbWUiOiIxIiwicHJvdmlkZXIiOiJMT0dJTiIsImlhdCI6MTU5MDgxODc1OSwiZXhwIjoxNjE5NjE4NzU5fQ.R3VMKHn1dyM1diep4Ro9-tJXg3BdVLDt5khvYYY4sEs
+###
+
+GET http://localhost:3000/auth/github
+Accept: application/json
+
 ###
