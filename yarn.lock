@@ -540,10 +540,10 @@
     webpack "4.43.0"
     webpack-node-externals "1.7.2"
 
-"@nestjs/common@^7.0.0":
-  version "7.1.0"
-  resolved "http://bnpm.byted.org/@nestjs/common/download/@nestjs/common-7.1.0.tgz#4fe8bc15903ee23d458c429b5cf7579edb0ef3a3"
-  integrity sha1-T+i8FZA+4j1FjEKbXPdXntsO86M=
+"@nestjs/common@^7.1.1":
+  version "7.1.1"
+  resolved "http://bnpm.byted.org/@nestjs/common/download/@nestjs/common-7.1.1.tgz#1896e4898688f8b0c527a76c5b090882de268b39"
+  integrity sha1-GJbkiYaI+LDFJ6dsWwkIgt4mizk=
   dependencies:
     axios "0.19.2"
     cli-color "2.0.0"
@@ -867,6 +867,22 @@
   resolved "http://bnpm.byted.org/@types/normalize-package-data/download/@types/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha1-5IbQ2XOW15vu3QpuM/RTT/a0lz4=
 
+"@types/oauth@*":
+  version "0.9.1"
+  resolved "http://bnpm.byted.org/@types/oauth/download/@types/oauth-0.9.1.tgz#e17221e7f7936b0459ae7d006255dff61adca305"
+  integrity sha1-4XIh5/eTawRZrn0AYlXf9hrcowU=
+  dependencies:
+    "@types/node" "*"
+
+"@types/passport-github2@^1.2.4":
+  version "1.2.4"
+  resolved "http://bnpm.byted.org/@types/passport-github2/download/@types/passport-github2-1.2.4.tgz#f56c386d1fe6435e359430e57adc1747a627bd86"
+  integrity sha1-9Ww4bR/mQ141lDDletwXR6YnvYY=
+  dependencies:
+    "@types/express" "*"
+    "@types/passport" "*"
+    "@types/passport-oauth2" "*"
+
 "@types/passport-jwt@^3.0.3":
   version "3.0.3"
   resolved "http://bnpm.byted.org/@types/passport-jwt/download/@types/passport-jwt-3.0.3.tgz#47b6c43af668852d7c83e56a23ed9f4515dd1814"
@@ -875,6 +891,15 @@
     "@types/express" "*"
     "@types/jsonwebtoken" "*"
     "@types/passport-strategy" "*"
+
+"@types/passport-oauth2@*":
+  version "1.4.9"
+  resolved "http://bnpm.byted.org/@types/passport-oauth2/download/@types/passport-oauth2-1.4.9.tgz#134007c4b505a82548c9cb19094c5baeb2205c92"
+  integrity sha1-E0AHxLUFqCVIycsZCUxbrrIgXJI=
+  dependencies:
+    "@types/express" "*"
+    "@types/oauth" "*"
+    "@types/passport" "*"
 
 "@types/passport-strategy@*":
   version "0.2.35"
@@ -1606,6 +1631,11 @@ base64-js@^1.0.2:
   version "1.3.1"
   resolved "http://bnpm.byted.org/base64-js/download/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
   integrity sha1-WOzoy3XdB+ce0IxzarxfrE2/jfE=
+
+base64url@3.x.x:
+  version "3.0.1"
+  resolved "http://bnpm.byted.org/base64url/download/base64url-3.0.1.tgz#6399d572e2bc3f90a9a8b22d5dbb0a32d33f788d"
+  integrity sha1-Y5nVcuK8P5CpqLItXbsKMtM/eI0=
 
 base@^0.11.1:
   version "0.11.2"
@@ -5571,6 +5601,11 @@ oauth-sign@~0.9.0:
   resolved "http://bnpm.byted.org/oauth-sign/download/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
   integrity sha1-R6ewFrqmi1+g7PPe4IqFxnmsZFU=
 
+oauth@0.9.x:
+  version "0.9.15"
+  resolved "http://bnpm.byted.org/oauth/download/oauth-0.9.15.tgz#bd1fefaf686c96b75475aed5196412ff60cfb9c1"
+  integrity sha1-vR/vr2hslrdUda7VGWQS/2DPucE=
+
 object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "http://bnpm.byted.org/object-assign/download/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -5891,6 +5926,13 @@ pascalcase@^0.1.1:
   resolved "http://bnpm.byted.org/pascalcase/download/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
+passport-github2@^0.1.12:
+  version "0.1.12"
+  resolved "http://bnpm.byted.org/passport-github2/download/passport-github2-0.1.12.tgz#a72ebff4fa52a35bc2c71122dcf470d1116f772c"
+  integrity sha1-py6/9PpSo1vCxxEi3PRw0RFvdyw=
+  dependencies:
+    passport-oauth2 "1.x.x"
+
 passport-jwt@^4.0.0:
   version "4.0.0"
   resolved "http://bnpm.byted.org/passport-jwt/download/passport-jwt-4.0.0.tgz#7f0be7ba942e28b9f5d22c2ebbb8ce96ef7cf065"
@@ -5899,12 +5941,16 @@ passport-jwt@^4.0.0:
     jsonwebtoken "^8.2.0"
     passport-strategy "^1.0.0"
 
-passport-local@^1.0.0:
-  version "1.0.0"
-  resolved "http://bnpm.byted.org/passport-local/download/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
-  integrity sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
+passport-oauth2@1.x.x:
+  version "1.5.0"
+  resolved "http://bnpm.byted.org/passport-oauth2/download/passport-oauth2-1.5.0.tgz#64babbb54ac46a4dcab35e7f266ed5294e3c4108"
+  integrity sha1-ZLq7tUrEak3Ks15/Jm7VKU48QQg=
   dependencies:
+    base64url "3.x.x"
+    oauth "0.9.x"
     passport-strategy "1.x.x"
+    uid2 "0.0.x"
+    utils-merge "1.x.x"
 
 passport-strategy@1.x.x, passport-strategy@^1.0.0:
   version "1.0.0"
@@ -7656,6 +7702,11 @@ uglify-js@^3.1.4:
   dependencies:
     commander "~2.20.3"
 
+uid2@0.0.x:
+  version "0.0.3"
+  resolved "http://bnpm.byted.org/uid2/download/uid2-0.0.3.tgz#483126e11774df2f71b8b639dcd799c376162b82"
+  integrity sha1-SDEm4Rd03y9xuLY53NeZw3YWK4I=
+
 union-value@^1.0.0:
   version "1.0.1"
   resolved "http://bnpm.byted.org/union-value/download/union-value-1.0.1.tgz#0b6fe7b835aecda61c6ea4d4f02c14221e109847"
@@ -7747,7 +7798,7 @@ util@^0.11.0:
   dependencies:
     inherits "2.0.3"
 
-utils-merge@1.0.1:
+utils-merge@1.0.1, utils-merge@1.x.x:
   version "1.0.1"
   resolved "http://bnpm.byted.org/utils-merge/download/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=

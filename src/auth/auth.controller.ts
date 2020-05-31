@@ -20,7 +20,7 @@ export class AuthController {
         if (!user) {
           throw new BadRequestException('Login error');
         }
-        const token = this.authService.certificate(`${user.id}`, user.name, Provider.LOGIN);
+        const token = this.authService.certificate(`${user.id}`, user.name, Provider.LOGIN,user.role);
         return token;
       }),
       catchError(err => throwError(err)),
@@ -38,7 +38,7 @@ export class AuthController {
     if (req.user) {
       return this.userService.findOrMergeGithubUser(req.user).pipe(
         map((user: User) => {
-          return this.authService.certificate(`${user.id}`, user.name, Provider.GITHUB);
+          return this.authService.certificate(`${user.id}`, user.name, Provider.GITHUB, user.role );
         }),
         catchError(err => throwError(err)),
       );

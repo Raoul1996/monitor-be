@@ -1,7 +1,7 @@
 import { CallHandler, ExecutionContext, HttpService, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoggerService } from '../logger/logger.service';
+import { LoggerService } from './logger.service';
 import { Request, Response } from 'express';
 
 @Injectable()
@@ -27,6 +27,6 @@ export class LoggingInterceptor implements NestInterceptor {
     const request:Request = ctx.switchToHttp().getRequest();
     const response:Response = ctx.switchToHttp().getResponse();
     const method = request.method
-    return `${response.statusCode} ${method && method.toUpperCase()} ${request.originalUrl} ${response.getHeader('x-request-id')} latency: ${latency}ms`
+    return `${response.statusCode} ${method && method.toUpperCase()} ${request.originalUrl}  ${response.getHeader('x-request-id')} ${request.ip} latency: ${latency}ms`
   }
 }

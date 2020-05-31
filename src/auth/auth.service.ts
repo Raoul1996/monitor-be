@@ -20,6 +20,7 @@ export const ProviderId = {
 export interface JwtContent {
   sub:string;
   username:string;
+  role?:string;
   provider:Provider
 }
 
@@ -42,8 +43,8 @@ export class AuthService {
       catchError(err => throwError(err))
     )
   }
-  certificate(userId:string,username:string,provider: Provider){
-    const payload = {sub:userId,username:username,provider}
+  certificate(userId:string,username:string,provider: Provider,role?:number){
+    const payload = {sub:userId,username:username,provider,role}
     try {
       const token = this.jwtService.sign(payload,{expiresIn:configuration.jwt.expiresIn})
       return token

@@ -3,7 +3,7 @@ import { LoggerService } from './logger.service';
 import { LoggerOptions } from './logger.interface';
 import configuration from '../config/configuration';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggingInterceptor } from '../interceptor/logging.interceptor';
+import { LoggingInterceptor } from './logging.interceptor';
 
 @Module({
   imports:[HttpModule],

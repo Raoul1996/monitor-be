@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-github2';
+import { Strategy, StrategyOptions } from 'passport-github2';
 import configuration from '../../config/configuration';
 import { AuthService } from '../auth.service';
 
@@ -30,6 +30,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
       clientSecret: configuration.oAuth.github.clientSecret,
       callbackURL: configuration.oAuth.github.callbackURL,
       scope: ['user:email'],
+      userAgent:'monitor_be'
     });
   }
 
