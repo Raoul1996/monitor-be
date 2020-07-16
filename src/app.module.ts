@@ -3,20 +3,24 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ServoModule } from './servo/servo.module';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
-import { RolesGuard } from './guard/roles.guard';
+import { RolesGuard } from './roles/roles.guard';
 import { PagesModule } from './pages/pages.module';
 import { LoggerModule } from './logger/logger.module';
-import { TimeoutInterceptor } from './interceptor/timeout.interceptor';
+import { TimeoutInterceptor } from './timeout/timeout.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailSenderModule } from './mail-sender/mail-sender.module';
 
 @Module({
   imports: [
-    ServoModule,
-    UserModule,
-    PagesModule,
     LoggerModule,
     AuthModule,
+    UserModule,
+    MailSenderModule,
+    ServoModule,
+    PagesModule,
+    MailerModule,
     ],
   controllers: [AppController],
   providers: [AppService,

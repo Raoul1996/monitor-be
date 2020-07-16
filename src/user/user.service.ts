@@ -43,6 +43,8 @@ export class UserService {
     userEntity.email = payload.email;
     userEntity.avatarUri = payload.avatarUri;
     userEntity.zone = payload.zone;
+    // 未激活
+    userEntity.status = 0
     userEntity.provider = ProviderId[Provider.LOGIN]
     userEntity.updateTime = new Date().valueOf();
     if (!isUpdate) {

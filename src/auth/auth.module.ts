@@ -9,17 +9,22 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { LoggerModule } from '../logger/logger.module';
 import { GithubStrategy } from './strategies/github.strategy';
+import { authProviders } from './auth.providers';
+import { DatabaseModule } from '../database/database.module';
+import { MailSenderModule } from '../mail-sender/mail-sender.module';
 
 @Module({
   imports: [
+    DatabaseModule,
     PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.register({
       secret: configuration.jwt.secret,
     }),
     UserModule,
-    LoggerModule
+    LoggerModule,
+    MailSenderModule
   ],
-  providers: [AuthService, CryptoService, JwtStrategy,GithubStrategy],
+  providers: [...authProviders,AuthService, CryptoService, JwtStrategy,GithubStrategy],
   exports:[AuthService],
   controllers: [AuthController]
 })

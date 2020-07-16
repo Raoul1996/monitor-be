@@ -18,7 +18,7 @@ import { ServoService } from './servo.service';
 import { Observable, of } from 'rxjs';
 import { CreateServoDto, ServoDto, SetTurnStepDto, UpdateServoDto } from './dto/servo.dto';
 import { Servo } from './interface/servo.interface';
-import { RolesGuard } from '../guard/roles.guard';
+import { RolesGuard } from '../roles/roles.guard';
 import { FindOneParams } from '../common/dto/common.dto';
 
 @Controller('servo')

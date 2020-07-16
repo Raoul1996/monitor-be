@@ -1,18 +1,43 @@
-import { BadRequestException, Body, Controller, Get, NotFoundException, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  HttpException, HttpStatus,
+  NotFoundException,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService, Provider, ProviderId } from './auth.service';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { LoginParams } from './dto/auth.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { GithubAuthGuard } from './guards/github-auth.guard';
 import { UserService } from '../user/user.service';
 import { User } from '../user/interfaces/user.inteface';
+import { CreateUserDto } from '../user/dto/user.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) {
   }
-
+  @Post('register')
+  createUser(@Body() createUserDto: CreateUserDto):Observable<User> {
+    return this.userService.checkUserExist(createUserDto.mobile,createUserDto.email).pipe(
+      //TODO: why use `mergeMap` not the `switchMap` or other High Order operator？
+      mergeMap(userId => {
+          if (!userId) {
+            return this.userService.createUser(createUserDto);
+          } else {
+            throw new HttpException('user_exist', HttpStatus.CONFLICT);
+          }
+        },
+      ),
+      catchError(err => throwError(err))
+    );
+  }
   @Post('login')
   login(@Body() loginParams: LoginParams): Observable<string> {
     return this.authService.validateUser(loginParams.mobile, loginParams.password).pipe(
